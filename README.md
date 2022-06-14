@@ -18,3 +18,10 @@ For more information on the course, visit **[ui.dev/typescript](https://ui.dev/t
 ### Project
 
 This project is a small NodeJS web server with some static pages and a dynamic route. All the code is type checked by the TypeScript compiler.
+
+To run this project locally:
+
+```shell
+  npm i
+  npm run start
+```
