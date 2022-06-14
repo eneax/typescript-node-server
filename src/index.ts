@@ -1,10 +1,16 @@
 import http, { IncomingMessage, ServerResponse } from "http";
 import path from "path";
 import fs from "fs/promises";
-import url from "url";
+import axios from "axios";
+
+interface Joke {
+  id: string;
+  joke: string;
+  status: string;
+}
 
 async function requestListener(req: IncomingMessage, res: ServerResponse) {
-  const parsedUrl = url.parse(req.url || "");
+  const parsedUrl = new URL(req.url || "", "http://localhost:3000");
 
   let data = "";
   let statusCode = 200;
@@ -18,6 +24,19 @@ async function requestListener(req: IncomingMessage, res: ServerResponse) {
   } catch (error) {
     data = await fs.readFile(path.join(__dirname, "static/404.html"), "utf-8");
     statusCode = 404;
+  }
+
+  // Special handling of the dad joke path
+  if (parsedUrl.pathname === "/dad-joke") {
+    const response = await axios.get("https://icanhazdadjoke.com", {
+      headers: {
+        Accept: "application/json",
+        "User-Agent": "Node Server",
+      },
+    });
+
+    const joke: Joke = await response.data;
+    data = data.replace(/{{joke}}/gm, joke.joke);
   }
 
   res.writeHead(statusCode, {
