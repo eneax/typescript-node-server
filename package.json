@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/eneax/typescript-node-server.git"
   },
-  "keywords": ["javascript", "node", "typescript"],
+  "keywords": ["javascript", "nodejs", "typescript"],
   "author": "Enea Xharja",
   "license": "MIT",
   "bugs": {
